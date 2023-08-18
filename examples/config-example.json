@@ -1,0 +1,482 @@
+{
+  "parser-directories": [
+    "~/.local/share/treesitter"
+  ],
+  "theme": {
+    "comment": {
+      "color": "#777777",
+      "bold": false,
+      "italic": true,
+      "underline": false
+    },
+    "comment.documentation": {
+      "color": "#7777BB",
+      "bold": false,
+      "italic": true,
+      "underline": false
+    },
+    "error": {
+      "color": "#911010",
+      "bold": false,
+      "italic": true,
+      "underline": true
+    },
+    "none": {
+      "color": "#3232D2",
+      "bold": false,
+      "italic": false,
+      "underline": false
+    },
+    "preproc": {
+      "color": "#105CFF",
+      "bold": false,
+      "italic": true,
+      "underline": false
+    },
+    "define": {
+      "color": "#1041FF",
+      "bold": false,
+      "italic": false,
+      "underline": false
+    },
+    "operator": {
+      "color": "#1041FF",
+      "bold": false,
+      "italic": false,
+      "underline": false
+    },
+    "punctuation.delimiter": {
+      "color": "#1041FF",
+      "bold": false,
+      "italic": false,
+      "underline": false
+    },
+    "punctuation.bracket": {
+      "color": "#FF1010",
+      "bold": false,
+      "italic": false,
+      "underline": false
+    },
+    "punctuation.special": {
+      "color": "#1041FF",
+      "bold": true,
+      "italic": false,
+      "underline": false
+    },
+    "string": {
+      "color": "#418310",
+      "bold": false,
+      "italic": false,
+      "underline": false
+    },
+    "string.documentation": {
+      "color": "#4D66AB",
+      "bold": false,
+      "italic": false,
+      "underline": false
+    },
+    "string.regex": {
+      "color": "#C8666A",
+      "bold": false,
+      "italic": false,
+      "underline": false
+    },
+    "string.escape": {
+      "color": "#109898",
+      "bold": false,
+      "italic": false,
+      "underline": false
+    },
+    "string.special": {
+      "color": "#109898",
+      "bold": false,
+      "italic": false,
+      "underline": false
+    },
+    "character": {
+      "color": "#000000",
+      "bold": false,
+      "italic": false,
+      "underline": false
+    },
+    "character.special": {
+      "color": "#000000",
+      "bold": false,
+      "italic": false,
+      "underline": false
+    },
+    "boolean": {
+      "color": "#EF3C10",
+      "bold": false,
+      "italic": false,
+      "underline": false
+    },
+    "number": {
+      "color": "#DE6F10",
+      "bold": false,
+      "italic": false,
+      "underline": false
+    },
+    "float": {
+      "color": "#DE6F10",
+      "bold": false,
+      "italic": false,
+      "underline": false
+    },
+    "function": {
+      "color": "#255CFF",
+      "bold": false,
+      "italic": false,
+      "underline": false
+    },
+    "function.builtin": {
+      "color": "#4C4BFF",
+      "bold": false,
+      "italic": false,
+      "underline": false
+    },
+    "function.call": {
+      "color": "#255CFF",
+      "bold": false,
+      "italic": false,
+      "underline": false
+    },
+    "function.macro": {
+      "color": "#255CFF",
+      "bold": false,
+      "italic": true,
+      "underline": false
+    },
+    "method": {
+      "color": "#724BFF",
+      "bold": false,
+      "italic": false,
+      "underline": false
+    },
+    "method.call": {
+      "color": "#724BFF",
+      "bold": false,
+      "italic": false,
+      "underline": false
+    },
+    "constructor": {
+      "color": "#724BFF",
+      "bold": false,
+      "italic": true,
+      "underline": false
+    },
+    "parameter": {
+      "color": "#EA5110",
+      "bold": false,
+      "italic": true,
+      "underline": false
+    },
+    "keyword": {
+      "color": "#3010CF",
+      "bold": true,
+      "italic": true,
+      "underline": false
+    },
+    "keyword.coroutine": {
+      "color": "#1010FF",
+      "bold": false,
+      "italic": false,
+      "underline": false
+    },
+    "keyword.function": {
+      "color": "#3010CF",
+      "bold": true,
+      "italic": false,
+      "underline": false
+    },
+    "keyword.operator": {
+      "color": "#1010FF",
+      "bold": false,
+      "italic": false,
+      "underline": false
+    },
+    "keyword.return": {
+      "color": "#1010FF",
+      "bold": false,
+      "italic": true,
+      "underline": false
+    },
+    "conditional": {
+      "color": "#1010FF",
+      "bold": false,
+      "italic": false,
+      "underline": false
+    },
+    "conditional.ternary": {
+      "color": "#1010FF",
+      "bold": false,
+      "italic": false,
+      "underline": false
+    },
+    "repeat": {
+      "color": "#1010FF",
+      "bold": false,
+      "italic": false,
+      "underline": false
+    },
+    "debug": {
+      "color": "#109898",
+      "bold": false,
+      "italic": false,
+      "underline": false
+    },
+    "label": {
+      "color": "#7777BB",
+      "bold": false,
+      "italic": false,
+      "underline": false
+    },
+    "include": {
+      "color": "#109898",
+      "bold": false,
+      "italic": true,
+      "underline": false
+    },
+    "exception": {
+      "color": "#911010",
+      "bold": false,
+      "italic": true,
+      "underline": false
+    },
+    "type": {
+      "color": "#1F8F42",
+      "bold": false,
+      "italic": false,
+      "underline": false
+    },
+    "type.builtin": {
+      "color": "#10909F",
+      "bold": false,
+      "italic": false,
+      "underline": false
+    },
+    "type.definition": {
+      "color": "#1050FF",
+      "bold": false,
+      "italic": false,
+      "underline": false
+    },
+    "type.qualifier": {
+      "color": "#1050FF",
+      "bold": false,
+      "italic": false,
+      "underline": false
+    },
+    "storageclass": {
+      "color": "#1050FF",
+      "bold": false,
+      "italic": false,
+      "underline": false
+    },
+    "attribute": {
+      "color": "#2387FF",
+      "bold": false,
+      "italic": false,
+      "underline": false
+    },
+    "field": {
+      "color": "#1A9D94",
+      "bold": false,
+      "italic": false,
+      "underline": false
+    },
+    "property": {
+      "color": "#2387FF",
+      "bold": false,
+      "italic": false,
+      "underline": false
+    },
+    "variable": {
+      "color": "#000000",
+      "bold": false,
+      "italic": false,
+      "underline": false
+    },
+    "variable.builtin": {
+      "color": "#AA1090",
+      "bold": false,
+      "italic": true,
+      "underline": false
+    },
+    "constant": {
+      "color": "#EA5110",
+      "bold": false,
+      "italic": false,
+      "underline": false
+    },
+    "constant.builtin": {
+      "color": "#EA5110",
+      "bold": false,
+      "italic": true,
+      "underline": false
+    },
+    "constant.macro": {
+      "color": "#EA5110",
+      "bold": false,
+      "italic": true,
+      "underline": false
+    },
+    "namespace": {
+      "color": "#109898",
+      "bold": false,
+      "italic": true,
+      "underline": false
+    },
+    "symbol": {
+      "color": "#1050FF",
+      "bold": false,
+      "italic": false,
+      "underline": false
+    },
+    "text": {
+      "color": "#000000",
+      "bold": false,
+      "italic": false,
+      "underline": false
+    },
+    "text.strong": {
+      "color": "#000000",
+      "bold": true,
+      "italic": false,
+      "underline": false
+    },
+    "text.emphasis": {
+      "color": "#000000",
+      "bold": false,
+      "italic": true,
+      "underline": false
+    },
+    "text.underline": {
+      "color": "#000000",
+      "bold": false,
+      "italic": false,
+      "underline": true
+    },
+    "text.strike": {
+      "color": "#000000",
+      "bold": false,
+      "italic": false,
+      "underline": false
+    },
+    "text.title": {
+      "color": "#000000",
+      "bold": true,
+      "italic": true,
+      "underline": false
+    },
+    "text.quote": {
+      "color": "#102B2B",
+      "bold": false,
+      "italic": true,
+      "underline": false
+    },
+    "text.uri": {
+      "color": "#10104B",
+      "bold": false,
+      "italic": true,
+      "underline": true
+    },
+    "text.math": {
+      "color": "#102B2B",
+      "bold": false,
+      "italic": false,
+      "underline": false
+    },
+    "text.environment": {
+      "color": "#000000",
+      "bold": false,
+      "italic": false,
+      "underline": false
+    },
+    "text.environment.name": {
+      "color": "#000000",
+      "bold": false,
+      "italic": false,
+      "underline": false
+    },
+    "text.reference": {
+      "color": "#000000",
+      "bold": false,
+      "italic": false,
+      "underline": false
+    },
+    "text.literal": {
+      "color": "#000000",
+      "bold": false,
+      "italic": false,
+      "underline": false
+    },
+    "text.literal.block": {
+      "color": "#000000",
+      "bold": false,
+      "italic": false,
+      "underline": false
+    },
+    "text.todo": {
+      "color": "#000000",
+      "bold": true,
+      "italic": true,
+      "underline": false
+    },
+    "text.note": {
+      "color": "#222222",
+      "bold": false,
+      "italic": false,
+      "underline": false
+    },
+    "text.warning": {
+      "color": "#444410",
+      "bold": false,
+      "italic": false,
+      "underline": false
+    },
+    "text.danger": {
+      "color": "#551010",
+      "bold": false,
+      "italic": false,
+      "underline": false
+    },
+    "text.diff.add": {
+      "color": "#104410",
+      "bold": false,
+      "italic": false,
+      "underline": false
+    },
+    "text.diff.delete": {
+      "color": "#551010",
+      "bold": false,
+      "italic": false,
+      "underline": false
+    },
+    "tag": {
+      "color": "#000000",
+      "bold": false,
+      "italic": false,
+      "underline": false
+    },
+    "tag.attribute": {
+      "color": "#000000",
+      "bold": false,
+      "italic": false,
+      "underline": false
+    },
+    "tag.delimiter": {
+      "color": "#000000",
+      "bold": false,
+      "italic": false,
+      "underline": false
+    },
+    "conceal": {
+      "color": "#000000",
+      "bold": false,
+      "italic": false,
+      "underline": false
+    }
+  }
+}
+
