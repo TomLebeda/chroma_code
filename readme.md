@@ -31,7 +31,7 @@ Julia example snippet:
 
 ### First run:
 
-If you never run `tree-sitter` on your machine before, it will want you to initialize it.
+If you never ran `tree-sitter` on your machine before, it will want you to initialize it.
 That is done simply by running `tree-sitter init-config` and it will create a configuration file and tell you where to find it.
 
 ### Actual usage of `chromacode`
