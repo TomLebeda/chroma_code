@@ -61,23 +61,23 @@ pub fn generate_latex_verbatim(
     highlighted_text_pieces: Vec<HighlightedText>,
     conf: &CliArgs,
 ) -> String {
-    let header = r"\begin{lstlisting}[
+    let header = format!("\\begin{{lstlisting}}[
 	% there are many more options of styling, see the official documentation, these are just the defaults I like
 	frame=single, % make single-line frame around the verbatim
 	framesep=2mm, % put some more spacing between the frame and text
 	aboveskip=5mm, % put some more space above the box
-	basicstyle={\linespread{0.9}\small\ttfamily}, % use typewriter (monospace) font
-	caption={CHANGE ME}, % set the caption text
+	basicstyle={{\\linespread{{0.9}}\\small\\ttfamily}}, % use typewriter (monospace) font
+	caption={{CHANGE ME}}, % set the caption text
 	captionpos=b, % put the caption at the bottom (b) or top (t) or both (bt)
-	label={lst:CHANGE ME}, % label to be referenced via \ref{}
+	label={{lst:CHANGE ME}}, % label to be referenced via \\ref{{}}
 	numbers=left, % line numbers on the left
-	numberstyle={\scriptsize\ttfamily\color{black!60}}, % the style for line numbers
-	escapeinside={<@}{@>} % between those sequences are command evaluated
-]";
+	numberstyle={{\\scriptsize\\ttfamily\\color{{black!60}}}}, % the style for line numbers
+	escapeinside={{{}}}{{{}}} % between those sequences are command evaluated
+]", conf.escape_start, conf.escape_end);
     let footer = r"\end{lstlisting}";
     let mut buffer = "".to_string();
     if !conf.raw {
-        buffer += header;
+        buffer += &header;
         buffer += "\n";
     }
     for text_piece in highlighted_text_pieces {
