@@ -21,23 +21,32 @@ Julia example snippet:
     On Linux, it is `tree-sitter-cli` package.   
     On Windows, it is `tree-sitter.exe`.
 
-    Note that on Windows, you will probably have to add it to `PATH` for it to be callable from anywhere.
+    You can check if the installation is successfull by running `tree-sitter` command.
+    It should print help. 
 
 2. **Parsers for languages downloaded**
     
     TreeSitter has [parsers for many languages](https://tree-sitter.github.io/tree-sitter/#parsers), you will need to download the ones you want and put them in a directory that will be specified in TreeSitter's configuration. 
     More on that later.
 
+3. **LaTeX setup**
+
+    In your LaTeX preamble, you will need to add `\usepackage{listings}` and below that, add `\lstset{escapeinside={<@}{@>}}`.
+    The `listings` package provides captions, labels and referencing as well as other formatting (line numbers, frame, ...). 
+
 ### First run:
 
-If you never run `tree-sitter` on your machine before, it will want you to initialize it.
+If you never ran `tree-sitter` on your machine before, it will want you to initialize it.
 That is done simply by running `tree-sitter init-config` and it will create a configuration file and tell you where to find it.
 
 ### Actual usage of `chromacode`
+You can download pre-build binary `chromacode[.exe]` from [here](https://github.com/TomLebeda/chroma_code/releases) or you can clone this repo and build it yourself by running `cargo build --release` (assuming you have [Rust and Cargo installed and set up](https://rustup.rs/)). 
+
 Once you have the initial setup done, you can just call `chromacode` and follow the instructions. 
 Or, if you prefer classic CLI, you can call `chromacode -h`, read the help page and use it in non-interactive mode (or even in hybrid mode). 
 
-The general idea is that you will feed it a file with some source code and it will spit out a `.tex` file that is ready to be used in your LaTeX code (by `\include{}` command).
+The general idea is that you will feed it a file with some source code and it will spit out a `.tex` file that is ready to be used in your LaTeX code (by `\input{}` command).
+Note that the package `listings` will be required in LaTeX since it provides labels, line numbering, frame and other goodness. 
 
 # Configuration
 
