@@ -14,7 +14,7 @@ use std::path::Path;
 #[derive(Parser)]
 #[command(
     author = "Tomáš Lebeda <tom.lebeda@gmail.com>",
-    version = "1.0.0",
+    version = "1.0.1",
     about = "Generate LaTeX for highlighted code listings with the power of TreeSitter."
 )]
 pub struct CliArgs {
@@ -33,6 +33,10 @@ pub struct CliArgs {
     /// String that marks end of evaluation inside LaTeX's verbatim environment.
     #[arg(long, default_value_t = String::from("@>"))]
     pub escape_end: String,
+
+    /// Tab size as a number of spaces
+    #[arg(long, default_value_t = 4)]
+    pub tab_size: usize,
 
     /// If enabled, the output will not be wrapped by verbatim environment, it will be only the "raw insides".
     #[arg(short, long)]

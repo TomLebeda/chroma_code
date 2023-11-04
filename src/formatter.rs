@@ -27,6 +27,7 @@ impl HighlightedText {
                     .replace('{', "\\{")
                     .replace("\\textbackslash", "\\textbackslash{}") // now add the empty braces to break the command without escaping them
                     .replace(' ', "\\ ")
+                    .replace('\t', "\\ ".repeat(conf.tab_size).as_str())
                     .replace('_', "\\_")
                     .replace('^', " \\^") // the space in front is necessary otherwise it would add hat to letters
                     .replace('&', "\\&")
@@ -70,7 +71,8 @@ pub fn generate_latex_verbatim(
 	captionpos=b, % put the caption at the bottom (b) or top (t) or both (bt)
 	label={lst:CHANGE ME}, % label to be referenced via \ref{}
 	numbers=left, % line numbers on the left
-	numberstyle={\scriptsize\ttfamily\color{black!60}} % the style for line numbers
+	numberstyle={\scriptsize\ttfamily\color{black!60}}, % the style for line numbers
+	escapeinside={<@}{@>} % between those sequences are command evaluated
 ]";
     let footer = r"\end{lstlisting}";
     let mut buffer = "".to_string();
