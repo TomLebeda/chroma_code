@@ -10,3 +10,6 @@ clap = { version = "4.3.22", features = ["derive"] }
 exitcode = "1.1.2"
 regex = "1.9.3"
 scraper = "0.17.1"
+
+[features]
+babel_ngerman = []

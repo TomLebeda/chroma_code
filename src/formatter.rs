@@ -11,32 +11,32 @@ impl HighlightedText {
         // formatted separately otherwise it will cause issues in pdf after rendering
         for text_piece in self.text.split('\n') {
             let color_name = &self.hex_color;
-            let mut out = format!(
-                "\\texttt{{{}}}",
-                // the first 5 replacements are because we parse html (we need to un-escape)
-                // the rest is necessary because LaTeX wouldn't compile otherwise
-                text_piece
-                    // .replace("\"", "\\\"")
-                    .replace("&lt;", "<")
-                    .replace("&gt;", ">")
-                    .replace("&quot;", "\"")
-                    .replace("&#39;", "'")
-                    .replace("&amp;", "&")
-                    .replace('\\', "\\textbackslash") // don't add the braces here yet
-                    .replace('}', "\\}") // escape the braces
-                    .replace('{', "\\{")
-                    .replace("\\textbackslash", "\\textbackslash{}") // now add the empty braces to break the command without escaping them
-                    .replace(' ', "\\ ")
-                    .replace('\t', "\\ ".repeat(conf.tab_size).as_str())
-                    .replace('_', "\\_")
-                    .replace('^', " \\^") // the space in front is necessary otherwise it would add hat to letters
-                    .replace('&', "\\&")
-                    .replace('%', "\\%")
-                    .replace('#', "\\#")
-                    .replace('~', "\\~")
-                    .replace('$', "\\$")
-                    .replace('"', "\\dq{}")
-            );
+            // the first 5 replacements are because we parse html (we need to un-escape)
+            // the rest is necessary because LaTeX wouldn't compile otherwise
+            let text_piece = text_piece
+                // .replace("\"", "\\\"")
+                .replace("&lt;", "<")
+                .replace("&gt;", ">")
+                .replace("&quot;", "\"")
+                .replace("&#39;", "'")
+                .replace("&amp;", "&")
+                .replace('\\', "\\textbackslash") // don't add the braces here yet
+                .replace('}', "\\}") // escape the braces
+                .replace('{', "\\{")
+                .replace("\\textbackslash", "\\textbackslash{}") // now add the empty braces to break the command without escaping them
+                .replace(' ', "\\ ")
+                .replace('\t', "\\ ".repeat(conf.tab_size).as_str())
+                .replace('_', "\\_")
+                .replace('^', " \\^") // the space in front is necessary otherwise it would add hat to letters
+                .replace('&', "\\&")
+                .replace('%', "\\%")
+                .replace('#', "\\#")
+                .replace('~', "\\~")
+                .replace('$', "\\$");
+            #[cfg(feature = "babel_ngerman")]
+            let text_piece = text_piece.replace('"', "\\dq{}");
+
+            let mut out = format!("\\texttt{{{}}}", text_piece);
             // if there is some other additional highlight, wrap the text in it
             if self.bold {
                 out = format!("\\textbf{{{}}}", out);
@@ -54,7 +54,7 @@ impl HighlightedText {
             out = format!("{}{}{}", conf.escape_start, out, conf.escape_end);
             mini_buffer.push(out);
         }
-        return mini_buffer.join("\n");
+        mini_buffer.join("\n")
     }
 }
 
