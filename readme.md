@@ -5,6 +5,8 @@ This is a CLI tool that consumes [`TreeSitter`](https://tree-sitter.github.io/tr
 If you are familiar with LaTeX packages like [`minted`](https://ctan.org/pkg/minted?lang=en) or [`listings`](https://ctan.org/pkg/listings), this could be seen as an alternative.
 
 ## Example snippets:
+also see [full example pdf](examples/example_full.pdf)
+
 _Note that the colors and styles can be individually customized in configuration file._
 
 Rust example snippet:  
