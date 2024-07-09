@@ -1,5 +1,10 @@
 use crate::{CliArgs, HighlightedText};
 
+/// default text for the caption
+pub const DEFAULT_CAPTION: &str = "CHANGE ME";
+/// default text for the label
+pub const DEFAULT_LABEL: &str = "CHANGE_ME";
+
 impl HighlightedText {
     /// Returns string that is piece of formatted LaTeX code that represents highlighted text.
     fn as_str(&self, conf: &CliArgs) -> String {
@@ -16,10 +21,9 @@ impl HighlightedText {
                 // the first 5 replacements are because we parse html (we need to un-escape)
                 // the rest is necessary because LaTeX wouldn't compile otherwise
                 text_piece
-                    // .replace("\"", "\\\"")
                     .replace("&lt;", "<")
                     .replace("&gt;", ">")
-                    .replace("&quot;", "\"")
+                    .replace("&quot;", if conf.german { "\\dq{}" } else { "\"" })
                     .replace("&#39;", "'")
                     .replace("&amp;", "&")
                     .replace('\\', "\\textbackslash") // don't add the braces here yet
@@ -36,6 +40,7 @@ impl HighlightedText {
                     .replace('~', "\\~")
                     .replace('$', "\\$")
             );
+
             // if there is some other additional highlight, wrap the text in it
             if self.bold {
                 out = format!("\\textbf{{{}}}", out);
@@ -57,6 +62,7 @@ impl HighlightedText {
     }
 }
 
+/// generates the LaTeX verbatim string that will be placed in the output file
 pub fn generate_latex_verbatim(
     highlighted_text_pieces: Vec<HighlightedText>,
     conf: &CliArgs,
@@ -67,13 +73,13 @@ pub fn generate_latex_verbatim(
 	framesep=2mm, % put some more spacing between the frame and text
 	aboveskip=5mm, % put some more space above the box
 	basicstyle={{\\linespread{{0.9}}\\small\\ttfamily}}, % use typewriter (monospace) font
-	caption={{CHANGE ME}}, % set the caption text
+	caption={{{}}}, % set the caption text
 	captionpos=b, % put the caption at the bottom (b) or top (t) or both (bt)
-	label={{lst:CHANGE ME}}, % label to be referenced via \\ref{{}}
+    label={{{}}}, % label to be referenced via \\ref{{}}
 	numbers=left, % line numbers on the left
 	numberstyle={{\\scriptsize\\ttfamily\\color{{black!60}}}}, % the style for line numbers
-	escapeinside={{{}}}{{{}}} % between those sequences are command evaluated
-]", conf.escape_start, conf.escape_end);
+	escapeinside={{{}}}{{{}}} % between those sequences are commands evaluated
+]", conf.caption, conf.label, conf.escape_start, conf.escape_end);
     let footer = r"\end{lstlisting}";
     let mut buffer = "".to_string();
     if !conf.raw {

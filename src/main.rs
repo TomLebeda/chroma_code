@@ -1,5 +1,12 @@
+//! main file, everything starts here
+
+/// output formatting
 mod formatter;
+
+/// tree-sitter's output html parsing
 mod parser;
+
+/// interactive-mode validation of user inputs
 mod validator;
 
 // my local imports
@@ -14,9 +21,11 @@ use std::path::Path;
 #[derive(Parser)]
 #[command(
     author = "Tomáš Lebeda <tom.lebeda@gmail.com>",
-    version = "1.0.1",
+    version = "1.1.0",
     about = "Generate LaTeX for highlighted code listings with the power of TreeSitter."
 )]
+
+/// command line arguments
 pub struct CliArgs {
     /// Input file with the code that should be highlighted.
     #[arg(short, long)]
@@ -42,7 +51,7 @@ pub struct CliArgs {
     #[arg(short, long)]
     pub raw: bool,
 
-    /// Generate necessary directories/files on disk and overwrite anything that stands in the way.
+    /// Generate necessary directories and/or files on disk and overwrite anything that stands in the way.
     #[arg(short, long)]
     pub force: bool,
 
@@ -53,17 +62,35 @@ pub struct CliArgs {
     /// Print more detailed information while running.
     #[arg(short, long)]
     pub verbose: bool,
+
+    /// Escape double quotes `"` as `\dq{}` for users of babel with [ngerman]
+    #[arg(short, long)]
+    pub german: bool,
+
+    /// use the provided string as a label for the listing
+    #[arg(short, long, default_value_t = String::from(formatter::DEFAULT_CAPTION))]
+    pub caption: String,
+
+    /// use the provided string as a label for the listing
+    #[arg(short, long, default_value_t = String::from(formatter::DEFAULT_LABEL))]
+    pub label: String,
 }
 
 #[derive(Debug)]
 pub struct HighlightedText {
+    /// the text that is highlighted
     text: String,
+    /// hexadecimal value of the font color
     hex_color: String,
+    /// if true, the text will be bold
     bold: bool,
+    /// if true, the text will be underlined
     underline: bool,
+    /// if true, the text will be italic
     italic: bool,
 }
 
+/// utility function for handling user input in interactive mode
 fn wait_for_input() -> String {
     let mut input = String::new();
     match std::io::stdin().read_line(&mut input) {
@@ -110,6 +137,9 @@ fn main() {
     let args = ["highlight", "-H", input_file];
 
     let cmd_output = std::process::Command::new(command).args(args).output();
+    if conf.verbose {
+        println!("executing command \"{} {}\"", command, args.join(" "))
+    }
     match cmd_output {
         Ok(out) => {
             if !out.status.success() {

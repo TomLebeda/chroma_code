@@ -1,5 +1,6 @@
 use crate::*;
 
+/// check if the provided path is valid output-file
 pub fn is_output_ok(conf: &mut CliArgs, cwd: &Path) -> bool {
     if let Some(output_path_str) = &conf.output {
         // some output path has been entered
@@ -35,7 +36,7 @@ pub fn is_output_ok(conf: &mut CliArgs, cwd: &Path) -> bool {
                         };
                         println!("Accepted output file: \"{}\"", output_abs_path.display());
                     }
-                    // the file will be overwritten later when writing the actual data, 
+                    // the file will be overwritten later when writing the actual data,
                     // so there is no need to do anything here
                     return true;
                 } else {
@@ -80,6 +81,7 @@ pub fn is_output_ok(conf: &mut CliArgs, cwd: &Path) -> bool {
     }
 }
 
+/// check if the provided path is valid input-file
 pub fn is_input_ok(conf: &mut CliArgs, cwd: &Path) -> bool {
     if let Some(input_path) = &conf.input {
         let input_path = std::path::Path::new(&input_path);
