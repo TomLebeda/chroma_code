@@ -23,7 +23,7 @@ impl HighlightedText {
                 text_piece
                     .replace("&lt;", "<")
                     .replace("&gt;", ">")
-                    .replace("&quot;", if conf.german { "\\dq{}" } else { "\"" })
+                    .replace("&quot;", "\"")
                     .replace("&#39;", "'")
                     .replace("&amp;", "&")
                     .replace('\\', "\\textbackslash") // don't add the braces here yet
@@ -39,6 +39,7 @@ impl HighlightedText {
                     .replace('#', "\\#")
                     .replace('~', "\\~")
                     .replace('$', "\\$")
+                    .replace('"', if conf.german { "\\dq{}" } else { "\"" })
             );
 
             // if there is some other additional highlight, wrap the text in it
