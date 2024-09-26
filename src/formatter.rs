@@ -39,6 +39,7 @@ impl HighlightedText {
                     .replace('#', "\\#")
                     .replace('~', "\\~")
                     .replace('$', "\\$")
+                    .replace("--", "-{}-") // replace LaTeX `--` ligature with two dashes
                     .replace('"', if conf.german { "\\dq{}" } else { "\"" })
             );
 
