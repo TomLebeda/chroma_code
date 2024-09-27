@@ -63,6 +63,10 @@ pub struct CliArgs {
     #[arg(short, long)]
     pub verbose: bool,
 
+    /// Print the final text also into stdout
+    #[arg(short, long)]
+    pub dump: bool,
+
     /// Escape double quotes `"` as `\dq{}` for users of babel with [ngerman]
     #[arg(short, long)]
     pub german: bool,
@@ -183,6 +187,9 @@ fn main() {
             }
             let highlighted_text_pieces = extract_highlighted_pieces(out.stdout, &conf);
             let generated_latex = generate_latex_verbatim(highlighted_text_pieces, &conf);
+            if conf.dump {
+                println!("{}", generated_latex);
+            }
             if let Err(write_err) = std::fs::write(output_file, generated_latex) {
                 println!(
                     "Sorry, there was error while trying to write the output file: {}",
