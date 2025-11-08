@@ -11,7 +11,7 @@ mod validator;
 
 // my local imports
 use formatter::generate_latex_verbatim;
-use parser::extract_highlighted_pieces;
+use parser::{extract_highlighted_pieces, parse_header};
 use validator::{is_input_ok, is_output_ok};
 
 // external imports
@@ -71,13 +71,33 @@ pub struct CliArgs {
     #[arg(short, long)]
     pub german: bool,
 
-    /// use the provided string as a label for the listing
+    /// Use the provided string as a caption for the listing.
+    /// Can be overridden by a header in the input file (see `header-comment-types`).
     #[arg(short, long, default_value_t = String::from(formatter::DEFAULT_CAPTION))]
     pub caption: String,
 
-    /// use the provided string as a label for the listing
+    /// Use the provided string as a label for the listing.
+    /// Can be overridden by a header in the input file (see `header-comment-types`).
     #[arg(short, long, default_value_t = String::from(formatter::DEFAULT_LABEL))]
     pub label: String,
+
+    /// Skip the output file argument and use the input file with the extension swapped to .tex
+    #[arg(long)]
+    pub swap_ext: bool,
+
+    /// Comma-separated list of comment prefixes to check for a header on the first line of the input file.
+    /// A header can set the caption and/or label.
+    /// Example: `# chroma_code: caption: My Caption label: my-label`
+    #[arg(long, default_value_t = String::from("#,//"))]
+    pub header_comment_types: String,
+
+    /// default color for the text
+    #[arg(long, default_value_t = String::from("000000"))]
+    pub default_color: String,
+
+    /// if true, the first line of the input file will be skipped
+    #[arg(skip)]
+    pub skip_first_line: bool,
 }
 
 #[derive(Debug)]
@@ -124,22 +144,59 @@ fn main() {
         while !is_input_ok(&mut conf, cwd) {
             continue;
         }
-        while !is_output_ok(&mut conf, cwd) {
-            continue;
+        if !conf.swap_ext {
+            while !is_output_ok(&mut conf, cwd) {
+                continue;
+            }
         }
     }
 
-    let command = "tree-sitter";
+    if conf.swap_ext && conf.output.is_none() {
+        if let Some(input_path_str) = &conf.input {
+            let input_path = Path::new(input_path_str);
+            let output_path = input_path.with_extension("tex");
+            conf.output = Some(output_path.to_str().unwrap().to_string());
+            if output_path.exists() {
+                if !conf.force {
+                    println!("Output file already exists, use --force to overwrite it.");
+                    std::process::exit(exitcode::UNAVAILABLE);
+                } else {
+                    println!("Output file already exists, overwriting it.");
+                }
+            }
+        }
+    }
+
     let Some(input_file) = &conf.input.clone() else {
         println!("Can't continue without input file. You probably used \"--trust\" without any input file.");
-        std::process::exit(exitcode::USAGE);
+        std::process::exit(exitcode::USAGE)
     };
     let Some(output_file) = &conf.output else {
-        println!("Can't continue without output file. You probably used \"--trust\" without any output file.");
-        std::process::exit(exitcode::USAGE);
+        println!("Can't continue without output file. You probably used \"--trust\" without any output file, or you used \"--swap-ext\" without providing an input file.");
+        std::process::exit(exitcode::USAGE)
     };
-    let args = ["highlight", "-H", input_file];
 
+    let content = std::fs::read_to_string(input_file).unwrap_or_else(|err| {
+        println!(
+            "Sorry, there was an error while reading the input file: {}",
+            err
+        );
+        std::process::exit(exitcode::NOINPUT);
+    });
+
+    if let Some(header_info) = parse_header(
+        &content,
+        &conf.header_comment_types.split(",").collect::<Vec<&str>>(),
+    ) {
+        println!("Using info from header: {:?}", header_info);
+
+        conf.caption = header_info.caption.unwrap_or(conf.caption);
+        conf.label = header_info.label.unwrap_or(conf.label);
+        conf.skip_first_line = true;
+    }
+
+    let command = "tree-sitter";
+    let args = ["highlight", "-H", input_file];
     let cmd_output = std::process::Command::new(command).args(args).output();
     if conf.verbose {
         println!("executing command \"{} {}\"", command, args.join(" "))
@@ -185,7 +242,9 @@ fn main() {
                     out.stdout.len()
                 );
             }
-            let highlighted_text_pieces = extract_highlighted_pieces(out.stdout, &conf);
+
+            let html_bytes: Vec<u8> = out.stdout;
+            let highlighted_text_pieces = extract_highlighted_pieces(html_bytes, &conf);
             let generated_latex = generate_latex_verbatim(highlighted_text_pieces, &conf);
             if conf.dump {
                 println!("{}", generated_latex);

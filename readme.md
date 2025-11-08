@@ -33,8 +33,8 @@ Julia example snippet:
 
 3. **LaTeX setup**
 
-    In your LaTeX preamble, you will need to add `\usepackage{listings}`.
-    The `listings` package provides captions, labels and referencing as well as other formatting (line numbers, frame, ...). 
+    In your LaTeX preamble, you will need to add `\usepackage{listings}` and `\usepackage{xcolor}`.
+    The `listings` package provides captions, labels and referencing as well as other formatting (line numbers, frame, ...), the `xcolor` packge allows using html color codes.
 
 ### First run:
 
@@ -48,7 +48,31 @@ Once you have the initial setup done, you can just call `chromacode` and follow 
 Or, if you prefer classic CLI, you can call `chromacode -h`, read the help page and use it in non-interactive mode (or even in hybrid mode). 
 
 The general idea is that you will feed it a file with some source code and it will spit out a `.tex` file that is ready to be used in your LaTeX code (by `\input{}` command).
-Note that the package `listings` will be required in LaTeX since it provides labels, line numbering, frame and other goodness. 
+Note that the package `listings` will be required in LaTeX since it provides labels, line numbering, frame and other goodness.
+
+### File header for caption and label
+
+You can specify the `caption` and `label` for the LaTeX listing directly in the source file.
+This is done by adding a special comment on the **first line** of the file.
+This will override any `--caption` or `--label` arguments passed on the command line.
+
+The format is as follows:
+
+```
+<comment> chroma_code: caption: <your_caption> label: <your_label>
+```
+
+- `<comment>` is the comment character(s) for your language (e.g., `#`, `//`, `--`).
+- Both `caption:` and `label:` parts are optional.
+
+**Example for Python:**
+
+```python
+# chroma_code: caption: My awesome Python code label: lst:py-awesome
+print("Hello, World!")
+```
+
+By default, `chromacode` looks for lines starting with `#` or `//`. You can customize this with the `--header-comment-types` argument, which takes a comma-separated list of comment prefixes. For example: `--header-comment-types="#,//,--"`.
 
 # Configuration
 
